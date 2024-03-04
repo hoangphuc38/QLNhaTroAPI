@@ -37,6 +37,7 @@ namespace QLNhaTroAPI.Services
 
             var listHoaDon = await _context.HoaDonPhong
                 .Where(c => c.TongKet.Id == tongket.Id)
+                .OrderBy(c => c.PhongId)
                 .ToListAsync();
 
             foreach (var item in listHoaDon)
