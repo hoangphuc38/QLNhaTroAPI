@@ -137,5 +137,37 @@ namespace QLNhaTroAPI.Services
 
             return phong;
         }
+        public async Task<Phong> Delete(int id)
+        {
+            var phong = await _context.Phong.FindAsync(id);
+
+            if (phong == null)
+            {
+                throw new KeyNotFoundException(id.ToString());
+            }
+
+            _context.Remove(phong);
+
+            await _context.SaveChangesAsync();
+
+            return phong;
+        }
+        public async Task<Phong> Update(int id, string tenPhong, int loaiPhong)
+        {
+            var phong = await _context.Phong.FindAsync(id);
+
+            if (phong == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            phong.TenPhong = tenPhong;
+            phong.LoaiPhong = loaiPhong;
+
+            _context.Phong.Update(phong);
+            await _context.SaveChangesAsync();
+
+            return phong;
+        }
     }
 }

@@ -29,5 +29,17 @@ namespace QLNhaTroAPI.Controllers
         {
             return Ok(await _repo.Add(tenPhong, loaiPhong));
         }
+
+        [HttpDelete("delete-phong/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await _repo.Delete(id));
+        }
+
+        [HttpPut("update-phong/{id}")]
+        public async Task<IActionResult> Update(int id, string tenPhong, int loaiPhong)
+        {
+            return Ok(await _repo.Update(id, tenPhong, loaiPhong));
+        }
     }
 }
