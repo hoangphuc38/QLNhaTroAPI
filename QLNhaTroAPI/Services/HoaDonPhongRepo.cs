@@ -29,8 +29,8 @@ namespace QLNhaTroAPI.Services
         public async Task<HoaDonPhong> Add(HoaDonPhongVM hoadonVM)
         {
             var tongket = await _context.TongKetThang
-                .Where(c => c.NgayTongKet.Month == hoadonVM.NgayHoaDon.Month
-                    && c.NgayTongKet.Year == hoadonVM.NgayHoaDon.Year)
+                .Where(c => c.NgayTongKet.Month == DateTime.Now.Month
+                    && c.NgayTongKet.Year == DateTime.Now.Year)
                 .FirstOrDefaultAsync();
 
             if (tongket == null)
@@ -65,8 +65,8 @@ namespace QLNhaTroAPI.Services
             hoadon.Phong = phong;
 
             var tongket_after = await _context.TongKetThang
-                .Where(c => c.NgayTongKet.Month == hoadonVM.NgayHoaDon.Month
-                    && c.NgayTongKet.Year == hoadonVM.NgayHoaDon.Year)
+                .Where(c => c.NgayTongKet.Month == DateTime.Now.Month
+                    && c.NgayTongKet.Year == DateTime.Now.Year)
                 .FirstOrDefaultAsync();
 
             if (tongket_after == null)
@@ -95,9 +95,9 @@ namespace QLNhaTroAPI.Services
 
             return hoadon;
         }
-        public async Task<HoaDonPhong> Update(HoaDonPhongVM hoadonVM)
+        public async Task<HoaDonPhong> Update(int Id, HoaDonPhongVM hoadonVM)
         {
-            var hoadon = await _context.HoaDonPhong.FindAsync(hoadonVM.Id);
+            var hoadon = await _context.HoaDonPhong.FindAsync(Id);
 
             if (hoadon == null)
             {
@@ -114,7 +114,7 @@ namespace QLNhaTroAPI.Services
                 $"(SELECT YEAR(NgayTongKet) as Year) = {hoadonVM.NgayHoaDon.Year} "
             );
 
-            hoadon.NgayHoaDon = hoadonVM.NgayHoaDon;
+            hoadon.NgayHoaDon = DateTime.Now;
             hoadon.SoDienThangTruoc = hoadonVM.SoDienThangTruoc;
             hoadon.SoDienThangNay = hoadonVM.SoDienThangNay;
             hoadon.TongSoDien = hoadonVM.TongSoDien;
@@ -135,8 +135,8 @@ namespace QLNhaTroAPI.Services
             hoadon.Phong = phong;
 
             var tongket_after = await _context.TongKetThang
-                .Where(c => c.NgayTongKet.Month == hoadonVM.NgayHoaDon.Month
-                    && c.NgayTongKet.Year == hoadonVM.NgayHoaDon.Year)
+                .Where(c => c.NgayTongKet.Month == DateTime.Now.Month
+                    && c.NgayTongKet.Year == DateTime.Now.Year)
                 .FirstOrDefaultAsync();
 
             if (tongket_after == null)
@@ -154,6 +154,21 @@ namespace QLNhaTroAPI.Services
             await _context.SaveChangesAsync();
 
             return hoadon;
+        }
+        public async Task<HoaDonPhong> Delete(int Id)
+        {
+            var hoadonphong = await _context.HoaDonPhong.FindAsync(Id);
+
+            if (hoadonphong == null)
+            {
+                throw new KeyNotFoundException(Id.ToString());
+            }
+
+            _context.Remove(hoadonphong);
+
+            await _context.SaveChangesAsync();
+
+            return hoadonphong;
         }
     }
 }

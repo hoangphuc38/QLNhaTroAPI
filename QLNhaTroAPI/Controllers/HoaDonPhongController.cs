@@ -25,10 +25,17 @@ namespace QLNhaTroAPI.Controllers
             return Ok(await _repo.Add(hoadonVM));
         }
 
-        [HttpPut("update-hoadon")]
-        public async Task<IActionResult> UpdateHoaDonPhong([FromBody] HoaDonPhongVM hoadonVM)
+        [HttpPut("update-hoadon/{Id}")]
+        public async Task<IActionResult> UpdateHoaDonPhong(int Id, HoaDonPhongVM hoadonVM)
         {
-            return Ok(await _repo.Update(hoadonVM));
+            return Ok(await _repo.Update(Id, hoadonVM));
         }
+
+        [HttpDelete("delete-hoadon")]
+        public async Task<IActionResult> DeleteHoaDonPhong(int Id)
+        {
+            return Ok(await _repo.Delete(Id));
+        }
+        
     }
 }

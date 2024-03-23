@@ -7,8 +7,8 @@ namespace QLNhaTroAPI.Repositories
     {
         Task<List<Phong>> GetAll();
         Task<Phong> GetDetailPhong(int id);
-        Task<Phong> Add(string tenPhong, int loaiPhong);
+        Task<Phong> Add(string tenPhong, int loaiPhong, double giaPhong);
         Task<Phong> Delete(int id);
-        Task<Phong> Update(int id, string tenPhong, int loaiPhong);
+        Task<Phong> Update(int id, string tenPhong, int loaiPhong, double giaPhong);
     }
 }

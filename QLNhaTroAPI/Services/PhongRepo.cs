@@ -68,6 +68,7 @@ namespace QLNhaTroAPI.Services
                 phongVM.Id = phong.Id;
                 phongVM.TenPhong = phong.TenPhong;
                 phongVM.LoaiPhong = phong.LoaiPhong;
+                phongVM.GiaPhong = phong.GiaPhong;
             }
             foreach (var item in listNguoi)
             {
@@ -121,12 +122,13 @@ namespace QLNhaTroAPI.Services
 
             return phongVM;
         }
-        public async Task<Phong> Add(string tenPhong, int loaiPhong)
+        public async Task<Phong> Add(string tenPhong, int loaiPhong, double giaPhong)
         {
             var phong = new Phong
             {
                 TenPhong = tenPhong,
                 LoaiPhong = loaiPhong,
+                GiaPhong = loaiPhong,
                 DanhSachNguoi = null,
                 DanhSachHoaDon = null,
             };
@@ -152,7 +154,7 @@ namespace QLNhaTroAPI.Services
 
             return phong;
         }
-        public async Task<Phong> Update(int id, string tenPhong, int loaiPhong)
+        public async Task<Phong> Update(int id, string tenPhong, int loaiPhong, double giaPhong)
         {
             var phong = await _context.Phong.FindAsync(id);
 
@@ -163,6 +165,7 @@ namespace QLNhaTroAPI.Services
 
             phong.TenPhong = tenPhong;
             phong.LoaiPhong = loaiPhong;
+            phong.GiaPhong = giaPhong;
 
             _context.Phong.Update(phong);
             await _context.SaveChangesAsync();

@@ -7,6 +7,7 @@ namespace QLNhaTroAPI.ViewModels
         public int Id { get; set; }
         public string? TenPhong { get; set; }
         public int LoaiPhong { get; set; }
+        public double GiaPhong { get; set; }
         public List<Nguoi>? DanhSachNguoi { get; set; }
         public List<HoaDonPhong>? DanhSachHoaDon { get; set; }
     }

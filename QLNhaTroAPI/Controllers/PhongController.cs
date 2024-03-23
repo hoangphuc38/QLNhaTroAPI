@@ -25,9 +25,9 @@ namespace QLNhaTroAPI.Controllers
         }
 
         [HttpPost("new-phong")]
-        public async Task<IActionResult> Add(string tenPhong, int loaiPhong)
+        public async Task<IActionResult> Add(string tenPhong, int loaiPhong, double giaPhong)
         {
-            return Ok(await _repo.Add(tenPhong, loaiPhong));
+            return Ok(await _repo.Add(tenPhong, loaiPhong, giaPhong));
         }
 
         [HttpDelete("delete-phong/{id}")]
@@ -37,9 +37,9 @@ namespace QLNhaTroAPI.Controllers
         }
 
         [HttpPut("update-phong/{id}")]
-        public async Task<IActionResult> Update(int id, string tenPhong, int loaiPhong)
+        public async Task<IActionResult> Update(int id, string tenPhong, int loaiPhong, double giaPhong)
         {
-            return Ok(await _repo.Update(id, tenPhong, loaiPhong));
+            return Ok(await _repo.Update(id, tenPhong, loaiPhong, giaPhong));
         }
     }
 }
