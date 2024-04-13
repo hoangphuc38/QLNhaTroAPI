@@ -13,9 +13,9 @@ namespace QLNhaTroAPI.Controllers
             _repo = repo;
         }
         [HttpGet("get-all")]
-        public async Task<IActionResult> GetAllPhong()
+        public async Task<IActionResult> GetAllPhong(string userId)
         {
-            return Ok(await _repo.GetAll());
+            return Ok(await _repo.GetAll(userId));
         }
 
         [HttpGet("get-detail/{roomId}")]

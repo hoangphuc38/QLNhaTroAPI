@@ -13,9 +13,11 @@ namespace QLNhaTroAPI.Services
         {
             _context = context;
         }
-        public async Task<List<Phong>> GetAll()
+        public async Task<List<Phong>> GetAll(string userId)
         {
-            var listPhong = await _context.Phong.ToListAsync();
+            var listPhong = await _context.Phong
+                    .Where(c => c.UserId == userId)
+                    .ToListAsync();
 
             foreach (var item in listPhong)
             {
@@ -128,7 +130,7 @@ namespace QLNhaTroAPI.Services
             {
                 TenPhong = tenPhong,
                 LoaiPhong = loaiPhong,
-                GiaPhong = loaiPhong,
+                GiaPhong = giaPhong,
                 DanhSachNguoi = null,
                 DanhSachHoaDon = null,
             };

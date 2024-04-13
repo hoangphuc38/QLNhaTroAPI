@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QLNhaTroAPI.Data;
+using QLNhaTroAPI.Models;
 using QLNhaTroAPI.Repositories;
 using QLNhaTroAPI.Services;
 
@@ -17,6 +19,7 @@ builder.Services.AddScoped<IPhongRepo, PhongRepo>();
 builder.Services.AddScoped<IBangGiaRepo, BangGiaRepo>();
 builder.Services.AddScoped<IHoaDonPhongRepo, HoaDonPhongRepo>();
 builder.Services.AddScoped<ITongKetRepo, TongKetRepo>();
+builder.Services.AddScoped<ITaiKhoanRepo, TaiKhoanRepo>();
 
 builder.Services.AddCors(options =>
 {
