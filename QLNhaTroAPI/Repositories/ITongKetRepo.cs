@@ -5,6 +5,6 @@ namespace QLNhaTroAPI.Repositories
 {
     public interface ITongKetRepo
     {
-        Task<TongKet> GetTongKetThang(int month, int year);
+        Task<TongKet> GetTongKetThang(string UserId, int month, int year);
     }
 }

@@ -5,6 +5,7 @@ namespace QLNhaTroAPI.ViewModels
     public class TongKetVM
     {
         public int Id { get; set; }
+        public string? UserId { get; set; }
         public DateTime NgayTongKet { get; set; }
         public double TongDien { get; set; }
         public double TongNuoc { get; set; }

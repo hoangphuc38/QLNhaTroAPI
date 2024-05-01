@@ -6,6 +6,6 @@ namespace QLNhaTroAPI.Repositories
     public interface ITaiKhoanRepo
     {
         Task<TaiKhoan> DangKy(TaiKhoanVM request);
-        Task<string> DangNhap(DangNhapVM login);
+        Task<TaiKhoanResponse> DangNhap(DangNhapVM login);
     }
 }

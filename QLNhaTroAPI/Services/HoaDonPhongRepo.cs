@@ -26,18 +26,18 @@ namespace QLNhaTroAPI.Services
 
             return hoadon;
         }
-        public async Task<HoaDonPhong> Add(HoaDonPhongVM hoadonVM)
+        public async Task<HoaDonPhong> Add(string UserId, HoaDonPhongVM hoadonVM)
         {
             var tongket = await _context.TongKetThang
                 .Where(c => c.NgayTongKet.Month == DateTime.Now.Month
-                    && c.NgayTongKet.Year == DateTime.Now.Year)
+                    && c.NgayTongKet.Year == DateTime.Now.Year & c.UserId == UserId)
                 .FirstOrDefaultAsync();
 
             if (tongket == null)
             {
                 _context.Database.ExecuteSqlRaw(
-                    $"INSERT INTO TongKetThang (NgayTongKet, TongDien, TongNuoc, TongTienTongKet)" +
-                    $"VALUES ('{DateTime.Now}', 0, 0, 0)"
+                    $"INSERT INTO TongKetThang (NgayTongKet, TongDien, TongNuoc, TongTienTongKet, UserId)" +
+                    $"VALUES ('{DateTime.Now}', 0, 0, 0, '" + UserId + "')"
                 );
             }
 
@@ -66,7 +66,7 @@ namespace QLNhaTroAPI.Services
 
             var tongket_after = await _context.TongKetThang
                 .Where(c => c.NgayTongKet.Month == DateTime.Now.Month
-                    && c.NgayTongKet.Year == DateTime.Now.Year)
+                    && c.NgayTongKet.Year == DateTime.Now.Year && c.UserId == UserId)
                 .FirstOrDefaultAsync();
 
             if (tongket_after == null)
@@ -78,24 +78,24 @@ namespace QLNhaTroAPI.Services
 
             var tongketThang = _context.TongKetThang.Where(c => c.Id == hoadonVM.TongKetId).FirstOrDefault();
             hoadon.TongKet = tongketThang;
-
-            _context.HoaDonPhong.Add(hoadon);
-
-            await _context.SaveChangesAsync();
-
+           
             _context.Database.ExecuteSqlRaw(
                 $"UPDATE TongKetThang " +
                 $"SET TongDien = TongDien + {hoadonVM.TongGiaDien}, " +
                 $"TongNuoc = TongNuoc + {hoadonVM.TongGiaNuoc}, " +
                 $"TongTienTongKet = TongTienTongKet + {hoadonVM.TongHoaDon}" +
-                $" WHERE " +
+                $" WHERE " + "UserId = '" + UserId + "' AND " +
                 $"(SELECT MONTH(NgayTongKet) as Month) = {DateTime.Now.Month} AND " +
                 $"(SELECT YEAR(NgayTongKet) as Year) = {DateTime.Now.Year} "
             );
 
+            _context.HoaDonPhong.Add(hoadon);
+
+            await _context.SaveChangesAsync();
+
             return hoadon;
         }
-        public async Task<HoaDonPhong> Update(int Id, HoaDonPhongVM hoadonVM)
+        public async Task<HoaDonPhong> Update(string UserId, int Id, HoaDonPhongVM hoadonVM)
         {
             var hoadon = await _context.HoaDonPhong.FindAsync(Id);
 
@@ -104,15 +104,9 @@ namespace QLNhaTroAPI.Services
                 throw new KeyNotFoundException();
             }
 
-            _context.Database.ExecuteSqlRaw(
-                $"UPDATE TongKetThang " +
-                $"SET TongDien = TongDien - {hoadon.TongGiaDien} + {hoadonVM.TongGiaDien}, " +
-                $"TongNuoc = TongNuoc - {hoadon.TongGiaNuoc} + {hoadonVM.TongGiaNuoc}, " +
-                $"TongTienTongKet = TongTienTongKet - {hoadon.TongHoaDon} + {hoadonVM.TongHoaDon}" +
-                $" WHERE " +
-                $"(SELECT MONTH(NgayTongKet) as Month) = {hoadonVM.NgayHoaDon.Month} AND " +
-                $"(SELECT YEAR(NgayTongKet) as Year) = {hoadonVM.NgayHoaDon.Year} "
-            );
+            double TongGiaDienTruoc = hoadon.TongGiaDien;
+            double TongGiaNuocTruoc = hoadon.TongGiaNuoc;
+            double TongHoaDonTruoc = hoadon.TongHoaDon;
 
             hoadon.NgayHoaDon = DateTime.Now;
             hoadon.SoDienThangTruoc = hoadonVM.SoDienThangTruoc;
@@ -136,7 +130,7 @@ namespace QLNhaTroAPI.Services
 
             var tongket_after = await _context.TongKetThang
                 .Where(c => c.NgayTongKet.Month == DateTime.Now.Month
-                    && c.NgayTongKet.Year == DateTime.Now.Year)
+                    && c.NgayTongKet.Year == DateTime.Now.Year && c.UserId == UserId)
                 .FirstOrDefaultAsync();
 
             if (tongket_after == null)
@@ -144,12 +138,19 @@ namespace QLNhaTroAPI.Services
                 throw new KeyNotFoundException();
             }
 
+            tongket_after.UserId = UserId;
+            tongket_after.NgayTongKet = DateTime.Now;
+            tongket_after.TongNuoc = tongket_after.TongNuoc - TongGiaNuocTruoc + hoadonVM.TongGiaNuoc;
+            tongket_after.TongDien = tongket_after.TongDien - TongGiaDienTruoc + hoadonVM.TongGiaDien;
+            tongket_after.TongTienTongKet = tongket_after.TongTienTongKet - TongHoaDonTruoc + hoadonVM.TongHoaDon;
+
+            _context.TongKetThang.Update(tongket_after);
+
             hoadonVM.TongKetId = tongket_after.Id;
 
-            var tongketThang = _context.TongKetThang.Where(c => c.Id == hoadonVM.TongKetId).FirstOrDefault();
-            hoadon.TongKet = tongketThang;
+            hoadon.TongKet = tongket_after;
 
-            _context.HoaDonPhong.Update(hoadon);
+            _context.HoaDonPhong.Update(hoadon);         
 
             await _context.SaveChangesAsync();
 

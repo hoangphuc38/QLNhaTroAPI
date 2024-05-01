@@ -14,15 +14,19 @@ namespace QLNhaTroAPI.Controllers
             _repo = repo;
         }
         [HttpGet("get-bang-gia")]
-        public async Task<IActionResult> GetBangGia()
+        public async Task<IActionResult> GetBangGia(string UserId)
         {
-            return Ok(await _repo.GetBangGia());
+            return Ok(await _repo.GetBangGia(UserId));
         }
-
-        [HttpPut("update-bang-gia")]
-        public async Task<IActionResult> Update(int id, BangGia banggia)
+        [HttpPost("add-bang-gia")]
+        public async Task<IActionResult> AddItemBangGia(string UserId, BangGia banggia)
         {
-            return Ok(await _repo.Update(id, banggia));
+            return Ok(await _repo.AddItemBangGia(UserId, banggia));
+        }
+        [HttpPut("update-bang-gia")]
+        public async Task<IActionResult> Update(string UserId, int id, BangGia banggia)
+        {
+            return Ok(await _repo.Update(UserId, id, banggia));
         }
     }
 }

@@ -13,9 +13,9 @@ namespace QLNhaTroAPI.Controllers
             _repo = repo;
         }
         [HttpGet("get-tongketthang/{month}/{year}")]
-        public async Task<IActionResult> GetTongKetThang(int month, int year)
+        public async Task<IActionResult> GetTongKetThang(string UserId, int month, int year)
         {
-            return Ok(await _repo.GetTongKetThang(month, year));
+            return Ok(await _repo.GetTongKetThang(UserId, month, year));
         }
     }
 }

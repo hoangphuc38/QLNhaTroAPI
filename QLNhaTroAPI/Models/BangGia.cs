@@ -3,6 +3,7 @@
     public class BangGia
     {
         public int Id { get; set; }
+        public string? UserId { get; set; }
         public string? HangMuc { get; set; }
         public double Gia { get; set; }
         public string? DonVi { get; set; }

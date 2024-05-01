@@ -124,10 +124,11 @@ namespace QLNhaTroAPI.Services
 
             return phongVM;
         }
-        public async Task<Phong> Add(string tenPhong, int loaiPhong, double giaPhong)
+        public async Task<Phong> Add(string userID, string tenPhong, int loaiPhong, double giaPhong)
         {
             var phong = new Phong
             {
+                UserId = userID,
                 TenPhong = tenPhong,
                 LoaiPhong = loaiPhong,
                 GiaPhong = giaPhong,

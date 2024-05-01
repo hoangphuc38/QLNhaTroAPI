@@ -13,13 +13,13 @@ namespace QLNhaTroAPI.Services
         {
             _context = context;
         }
-        public async Task<TongKet> GetTongKetThang(int month, int year)
+        public async Task<TongKet> GetTongKetThang(string UserId, int month, int year)
         {
             TongKet tongketVM = new TongKet();
             tongketVM.DanhSachHoaDon = new List<HoaDonInTongKet>();
 
             var tongket = await _context.TongKetThang
-                .Where(c => c.NgayTongKet.Month == month && c.NgayTongKet.Year == year)
+                .Where(c => c.NgayTongKet.Month == month && c.NgayTongKet.Year == year && c.UserId == UserId)
                 .FirstOrDefaultAsync();
 
             if (tongket == null)
@@ -29,6 +29,7 @@ namespace QLNhaTroAPI.Services
             else
             {
                 tongketVM.Id = tongket.Id;
+                tongketVM.UserId = UserId;
                 tongketVM.NgayTongKet = tongket.NgayTongKet;
                 tongketVM.TongNuoc = tongket.TongNuoc;
                 tongketVM.TongDien = tongket.TongDien;

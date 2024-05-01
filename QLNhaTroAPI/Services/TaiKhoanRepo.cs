@@ -30,7 +30,7 @@ namespace QLNhaTroAPI.Services
 
             return taikhoan;
         }
-        public async Task<string> DangNhap(DangNhapVM login)
+        public async Task<TaiKhoanResponse> DangNhap(DangNhapVM login)
         {
             var checkUser = await _context.TaiKhoan
                 .Where(c => c.UserName == login.UserName && c.Password == login.Password)
@@ -41,7 +41,11 @@ namespace QLNhaTroAPI.Services
                 throw new Exception("Không tìm thấy tài khoản");
             }
 
-            return checkUser.UserId;
+            return new TaiKhoanResponse
+            {
+                UserId = checkUser.UserId,
+                Name = checkUser.Name,
+            };
         }
         private async Task<string> AutoID()
         {

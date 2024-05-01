@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLNhaTroAPI.Data;
 
@@ -11,9 +12,10 @@ using QLNhaTroAPI.Data;
 namespace QLNhaTroAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240430105940_AddUserID_Column")]
+    partial class AddUserID_Column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +41,6 @@ namespace QLNhaTroAPI.Migrations
                     b.Property<string>("HangMuc")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("BangGia");
@@ -64,40 +63,40 @@ namespace QLNhaTroAPI.Migrations
                     b.Property<int>("PhongId")
                         .HasColumnType("int");
 
-                    b.Property<double>("SoDienThangNay")
+                    b.Property<double?>("SoDienThangNay")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoDienThangTruoc")
+                    b.Property<double?>("SoDienThangTruoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoNgayO")
+                    b.Property<double?>("SoNgayO")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoNuocThangNay")
+                    b.Property<double?>("SoNuocThangNay")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoNuocThangTruoc")
+                    b.Property<double?>("SoNuocThangTruoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongGiaDien")
+                    b.Property<double?>("TongGiaDien")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongGiaNuoc")
+                    b.Property<double?>("TongGiaNuoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongHoaDon")
+                    b.Property<double?>("TongHoaDon")
                         .HasColumnType("float");
 
                     b.Property<int?>("TongKetId")
                         .HasColumnType("int");
 
-                    b.Property<double>("TongSoDien")
+                    b.Property<double?>("TongSoDien")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongSoNuoc")
+                    b.Property<double?>("TongSoNuoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongTienPhong")
+                    b.Property<double?>("TongTienPhong")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -223,6 +222,7 @@ namespace QLNhaTroAPI.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -309,40 +309,40 @@ namespace QLNhaTroAPI.Migrations
                     b.Property<int>("PhongId")
                         .HasColumnType("int");
 
-                    b.Property<double>("SoDienThangNay")
+                    b.Property<double?>("SoDienThangNay")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoDienThangTruoc")
+                    b.Property<double?>("SoDienThangTruoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoNgayO")
+                    b.Property<double?>("SoNgayO")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoNuocThangNay")
+                    b.Property<double?>("SoNuocThangNay")
                         .HasColumnType("float");
 
-                    b.Property<double>("SoNuocThangTruoc")
+                    b.Property<double?>("SoNuocThangTruoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongGiaDien")
+                    b.Property<double?>("TongGiaDien")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongGiaNuoc")
+                    b.Property<double?>("TongGiaNuoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongHoaDon")
+                    b.Property<double?>("TongHoaDon")
                         .HasColumnType("float");
 
                     b.Property<int>("TongKetId")
                         .HasColumnType("int");
 
-                    b.Property<double>("TongSoDien")
+                    b.Property<double?>("TongSoDien")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongSoNuoc")
+                    b.Property<double?>("TongSoNuoc")
                         .HasColumnType("float");
 
-                    b.Property<double>("TongTienPhong")
+                    b.Property<double?>("TongTienPhong")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
